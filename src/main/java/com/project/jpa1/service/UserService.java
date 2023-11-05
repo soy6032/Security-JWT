@@ -1,5 +1,6 @@
 package com.project.jpa1.service;
 
+import com.project.jpa1.dto.JoinDto;
 import com.project.jpa1.dto.UserDto;
 import com.project.jpa1.dto.UserReqDto;
 import com.project.jpa1.dto.UserRespDto;
@@ -58,7 +59,7 @@ public class UserService {
 
     // 서비스는 DTO를 요청받고, DTO로 응답한다.
     @Transactional // 트랜잭션이 메서드 시작할 때, 시작되고, 종료될 때 함께 종료
-    public UserRespDto.JoinRespDto join(UserReqDto.JoinReqDto joinReqDto) {
+    public UserRespDto.JoinRespDto join(JoinDto joinReqDto) {
         // 1. 동일 유저네임 존재 검사
         Optional<User> userOP = userRepository.findByUsername(joinReqDto.getUsername());
         if (userOP.isPresent()) {

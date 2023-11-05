@@ -40,7 +40,6 @@ public class SecurityConfig {
         }
     }
 
-    // JWT 서버를 만들 예정!! Session 사용안함.
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.debug("디버그 : filterChain 빈 등록됨");
@@ -68,10 +67,9 @@ public class SecurityConfig {
             CustomResponseUtil.fail(response, "권한이 없습니다", HttpStatus.FORBIDDEN);
         });
 
-        // https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html
         http.authorizeRequests()
                 .antMatchers("/api/s/**").authenticated()
-                .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN) // 최근 공식문서에서는 ROLE_ 안붙여도 됨
+                .antMatchers("/api/admin/**").hasRole("" + UserEnum.ADMIN)
                 .anyRequest().permitAll();
 
         return http.build();
@@ -81,10 +79,10 @@ public class SecurityConfig {
         log.debug("디버그 : configurationSource cors 설정이 SecurityFilterChain에 등록됨");
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*"); // GET, POST, PUT, DELETE (Javascript 요청 허용)
-        configuration.addAllowedOriginPattern("*"); // 모든 IP 주소 허용 (프론트 앤드 IP만 허용 react)
-        configuration.setAllowCredentials(true); // 클라이언트에서 쿠키 요청 허용
-        configuration.addExposedHeader("Authorization"); // 옛날에는 디폴트 였다. 지금은 아닙니다.
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedOriginPattern("*");
+        configuration.setAllowCredentials(true);
+        configuration.addExposedHeader("Authorization");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
