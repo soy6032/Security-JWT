@@ -8,9 +8,9 @@ import java.util.HashMap;
 
 @RequiredArgsConstructor
 @Getter
-public class ResponseErrorDto<T> {
+public class ResponseErrorDto<E> {
     private final Integer code; // 1 성공, -1 실패
     private final HashMap<String, String> msg;
-    private final T data;
+    private final E data;
 
 }
